@@ -45,8 +45,6 @@ const int button_turn_left = 11;
 #define SI 494
 #define _DO 528
 
-
-
 //----------------------------------------------------Definindo Conexoes com dos botoes----------------------------------------------------
 
 Buttons set_buttons = {button_play, button_start, button_forward, button_turn_right, button_turn_left};
@@ -66,8 +64,10 @@ ControlMotor linkage(set_linkage); // Ponte H motor
 
 // ----------------------------------------------------Variaveis Globais----------------------------------------------------
 
-int sequence[10] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+
 int time = 500; // 500 milisegundos
+const int maxTasks = 10;
+int sequence[maxTasks];
 // ----------------------------------------------------Protótipo de funções----------------------------------------------------
 
 void wait(unsigned long time);
@@ -85,11 +85,11 @@ void loop() {
   if(buttons.playPressed()){
     tone(buzzer, LA, time);
     wait(time);
-    for(int i = 0; i <= 9; i++){
+    for(int i = 0; i < maxTasks; i++){
       sequence[i] = -1;
     }
     int count = 0;
-    while((!buttons.startPressed()) && (count < 9)){
+    while((!buttons.startPressed()) && (count < maxTasks)){
       if(buttons.forwardPressed()) {sequence[count] = 0; count++; wait(time); tone(buzzer, DO, time);}
       else if(buttons.turnRightPressed()){sequence[count] = 1; count++; wait(time);tone(buzzer, RE, time);}
       else if(buttons.turnLeftPressed()){sequence[count] = 2; count++; wait(time);tone(buzzer, MI, time);}
@@ -98,10 +98,9 @@ void loop() {
     tone(buzzer, _DO, time);
     run();
   }
-
-
 }
 
+//===================================== Implementação das funções ==========================================
 
 void wait(unsigned long time){
 
