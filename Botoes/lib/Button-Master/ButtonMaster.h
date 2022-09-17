@@ -27,6 +27,7 @@ class ButtonMaster{
   bool turnRightPressed();
   bool turnLeftPressed();
   bool playPressed();
+  bool startPressed();
   void run(ControlMotor &motor);
  // void setPWM(int _pwm_left, int _pwm_right);
   //void goForward();

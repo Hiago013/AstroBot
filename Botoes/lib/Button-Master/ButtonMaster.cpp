@@ -37,18 +37,25 @@ bool ButtonMaster::playPressed(){
 return !digitalRead(button_play);
 }
 
+bool ButtonMaster::startPressed(){
+return !digitalRead(button_function);
+}
+
 void ButtonMaster::run(ControlMotor &motor){
     for(auto value: sequence){
         switch (value)
         {
         case 0:
             motor.goForward();
+            delay(5000);
             break;
         case 1:
             motor.TurnRight();
+            delay(5000);
             break;
         case 2:
             motor.TurnLeft();
+            delay(5000);
             break;
         default:
             motor.Off();
